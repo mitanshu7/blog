@@ -138,7 +138,7 @@
 
       
       &nbsp; · &nbsp;
-      3 min read
+      4 min read
       
     </p>
 
@@ -157,6 +157,7 @@
     <li><a href="#step-1-embedding-arxiv-abstracts">Step 1: Embedding arXiv Abstracts</a></li>
     <li><a href="#step-2-storing-embeddings-in-milvus">Step 2: Storing Embeddings in milvus</a></li>
     <li><a href="#step-3-serving-the-app">Step 3: Serving the App</a></li>
+    <li><a href="#future-plans">Future Plans</a></li>
     <li><a href="#conclusion">Conclusion</a></li>
   </ul>
 </nav>
@@ -183,10 +184,39 @@
 
 
 
-<figure class="">
+
+
+
+<figure class=" img-light">
 
     <div>
-        <img loading="lazy" alt="how embeddings work" src=" how_embeddings_work.jpg">
+        <img loading="lazy" alt="how embeddings work" src=" how_embeddings_work_l.jpg#light">
+    </div>
+
+    
+    <div class="caption-container">
+        <figcaption> Source: <a href="https://qdrant.tech/articles/what-are-embeddings/">qdrant</a> </figcaption>
+    </div>
+    
+</figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure class=" img-dark">
+
+    <div>
+        <img loading="lazy" alt="how embeddings work" src=" how_embeddings_work_d.webp#dark">
     </div>
 
     
@@ -207,10 +237,39 @@
 
 
 
-<figure class="">
+
+
+
+<figure class=" img-light">
 
     <div>
-        <img loading="lazy" alt="2d semantics" src=" 2d_semantics.webp">
+        <img loading="lazy" alt="2d semantics" src=" 2d_semantics_l.webp#light">
+    </div>
+
+    
+    <div class="caption-container">
+        <figcaption> Source: <a href="https://arxiv.org/abs/1910.03375">arXiv</a> </figcaption>
+    </div>
+    
+</figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure class=" img-dark">
+
+    <div>
+        <img loading="lazy" alt="2d semantics" src=" 2d_semantics_d.webp#dark">
     </div>
 
     
@@ -257,10 +316,39 @@
 
 
 
-<figure class="">
+
+
+
+<figure class=" img-light">
 
     <div>
-        <img loading="lazy" alt="Vector database comparision" src=" vector-database-comparision.webp">
+        <img loading="lazy" alt="Vector database comparision" src=" vector-database-comparision-l.webp#light">
+    </div>
+
+    
+    <div class="caption-container">
+        <figcaption> Something that helped me choose milvus. Source: <a href="https://www.reddit.com/r/LangChain/comments/170jigz/my_strategy_for_picking_a_vector_database_a/">Reddit</a> </figcaption>
+    </div>
+    
+</figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure class=" img-dark">
+
+    <div>
+        <img loading="lazy" alt="Vector database comparision" src=" vector-database-comparision-d.webp#dark">
     </div>
 
     
@@ -282,11 +370,66 @@
 </li>
 </ol>
 <h2 id="step-3-serving-the-app">Step 3: Serving the App</h2>
-<p>To serve the app, I chose <a href="https://www.gradio.app/">Gradio</a>, a simple yet powerful framework for building web UIs for machine learning apps. I integrated Gradio with my backend to allow for a user-friendly interaction with the service.</p>
+<p>To serve the app, I chose <a href="https://www.gradio.app/">Gradio</a>, a simple yet powerful framework for building web UIs for machine learning apps. I integrated Gradio with my backend to allow for a user-friendly interaction with the service. To increase response rate and decrease server load, I cache all the queries.</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure class=" img-light">
+
+    <div>
+        <img loading="lazy" alt="PaperMatch UI" src=" papermatch.mitanshu.tech.l.png#light">
+    </div>
+
+    
+    <div class="caption-container">
+        <figcaption> PaperMatch UI. Source: <a href="https://papermatch.mitanshu.tech">PaperMatch</a> </figcaption>
+    </div>
+    
+</figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure class=" img-dark">
+
+    <div>
+        <img loading="lazy" alt="PaperMatch UI" src=" papermatch.mitanshu.tech.d.png#dark">
+    </div>
+
+    
+    <div class="caption-container">
+        <figcaption> PaperMatch UI. Source: <a href="https://papermatch.mitanshu.tech">PaperMatch</a> </figcaption>
+    </div>
+    
+</figure></p>
 <p>You can find codes for these at <a href="https://github.com/mitanshu7/search_arxiv">mitanshu7/search_arxiv</a>.</p>
+<h2 id="future-plans">Future Plans</h2>
+<p>Currently, the site only indexes papers from arXiv, which provides open access to abstracts for all papers. In the future, I plan to expand this system to include other academic journals, even if they are behind paywalls. Since most journals make their abstracts freely available, I can embed those abstracts and add them to the Milvus vector database alongside arXiv papers. This would enable researchers to discover related papers across a wider range of sources without needing access to full-text content.</p>
+<p>The goal is to create a more comprehensive paper discovery tool that covers a variety of fields and journals, helping users find relevant research more effectively. Integration with publishers and APIs that provide access to abstracts will be key to this expansion.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>By combining transformer-based embeddings with Milvus, I was able to build an efficient and scalable paper recommendation engine. The flexibility of both the embedding model and Milvus allows the system to handle large-scale data, making it a powerful tool for researchers and academics to discover relevant research papers.</p>
-<p>Did i mention that you can try it out at <a href="https://papermatch.mitanshu.tech">papermatch.mitanshu.tech</a>? :)</p>
+<p>Did i mention that you can try it out at <a href="https://papermatch.mitanshu.tech"><strong>papermatch.mitanshu.tech</strong></a>? :)</p>
 
     
   </div>
