@@ -1,7 +1,7 @@
 +++
 title = 'About Me'
 date = 2024-09-10T12:28:54+05:30
-draft = true
+draft = false
 summary = "Nice to meet you!"
 description = "Nice to meet you!"
 toc = false
@@ -13,7 +13,7 @@ showTags = false
 hideBackToTop = true
 +++
 
-Hi! I'm Mitanshu Sukhwani, a tech enthusiast with a Master's degree in Physics from IIT Madras. After completing my studies, I spent a year as a Project Associate at IISER Tirupati, where I worked on EEG data, network science, and the mathematical modeling of mammalian brains. In my free time, I explored projects in Machine Learning (ML) and Artificial Intelligence (AI).
+Hi! I'm Mitanshu Sukhwani, a tech enthusiast with a Master's degree in Physics from [IIT Madras](https://www.iitm.ac.in/). After completing my studies, I spent a year as a Project Associate at [IISER Tirupati](https://www.iisertirupati.ac.in/), where I worked on EEG data, network science, and the mathematical modeling of mammalian brains. In my free time, I explore projects in Machine Learning (ML) and Linux.
 
 I'm passionate about the intersection of neuroscience, software, and data, and I enjoy working on innovative solutions that blend technology with real-world challenges. When I'm not coding or diving into new AI ideas, you'll likely find me enjoying a cup of coffee and spending time with my cats.
 

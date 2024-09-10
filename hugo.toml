@@ -1,13 +1,13 @@
-baseURL = 'https://example.org/'
+baseURL = 'https://mitanshu.tech/'
 languageCode = 'en-us'
-title = 'My website'
+title = 'Mitanshu Sukhwani'
 theme = 'typo'
 
 [taxonomies]
 tag = 'tags'
 
 # Google analytics code
-googleAnalytics = "G-xxxxxxxxx"
+#googleAnalytics = "G-xxxxxxxxx"
 
 [params]
 # Meta description
@@ -31,7 +31,7 @@ homeCollection = 'posts'
 # Lists parameters
 paginationSize = 10
 listSummaries = true
-listDateFormat = '2000 Jan 1'
+listDateFormat = '2 Jan 2006'
 
 # Breadcrumbs
 breadcrumbs = true
@@ -61,7 +61,7 @@ url = "/about"
 # Syntax highligth on code blocks
 [markup]
 [markup.highlight]
-style = 'algol'
+style = 'rose-pine-dawn'
 
 # Giscus comments
 [params.giscus]

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en-us"
+  dir="ltr">
+
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+
+<link rel="icon" type="image/ico" href="http://localhost:1313//favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313//favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313//favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="http://localhost:1313//android-chrome-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="http://localhost:1313//apple-touch-icon.png">
+
+<meta name="description" content="Discovering ArXiv papers."/>
+
+<title>
+    
+    PaperMatch | Mitanshu Sukhwani
+    
+</title>
+
+<link rel="canonical" href="http://localhost:1313/posts/papermatch/"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/assets/combined.min.66ed288e713700859ba6a96e0b16ff08246cb2096b1ac7749bf0627a619f0681.css" media="all">
+
+
+
+
+
+  </head>
+
+  
+
+  
+  
+  
+
+  <body class="auto">
+
+    <div class="content">
+      <header>
+        
+
+<div class="header">
+
+    
+
+    <h1 class="header-title">Mitanshu Sukhwani</h1>
+
+    <div class="flex">
+        
+
+        
+        
+      
+        <p class="small ">
+            <a href="/" >
+                /home
+            </a>
+        </p>
+        
+      
+        <p class="small ">
+            <a href="/posts" >
+                /posts
+            </a>
+        </p>
+        
+      
+        <p class="small ">
+            <a href="/about" >
+                /about
+            </a>
+        </p>
+        
+        
+    </div>
+
+    
+
+</div>
+
+      </header>
+
+      <main class="main">
+        
+
+
+
+
+
+<div class="breadcrumbs">
+    
+    <a href="/">Home</a>
+    <span class="breadcrumbs-separator"> > </span>
+    
+    <a href="/posts/">Posts</a>
+    <span class="breadcrumbs-separator"> > </span>
+    
+    <a class="breadcrumbs-current" href="/posts/papermatch/">PaperMatch</a>
+</div>
+
+
+
+<div >
+
+  <div class="single-intro-container">
+
+    
+
+    <h1 class="single-title">PaperMatch</h1>
+    
+    <p class="single-summary">Discovering ArXiv papers.</p>
+    
+
+    
+
+    <p class="single-readtime">
+      
+      
+      
+      <time datetime="2024-09-10T14:18:48&#43;05:30">September 10, 2024</time>
+      
+
+      
+      &nbsp; · &nbsp;
+      3 min read
+      
+    </p>
+
+  </div>
+
+  
+
+  
+
+  
+  <aside class="toc">
+    <p><strong>Table of contents</strong></p>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#building-a-paper-recommendation-engine-with-arxiv-abstracts-and-milvus">Building a Paper Recommendation Engine with arXiv Abstracts and Milvus</a></li>
+    <li><a href="#step-1-embedding-arxiv-abstracts">Step 1: Embedding arXiv Abstracts</a></li>
+    <li><a href="#step-2-storing-embeddings-in-milvus">Step 2: Storing Embeddings in milvus</a></li>
+    <li><a href="#step-3-serving-the-app">Step 3: Serving the App</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+  </aside>
+  
+
+  
+
+  <div class="single-content">
+    <h2 id="building-a-paper-recommendation-engine-with-arxiv-abstracts-and-milvus">Building a Paper Recommendation Engine with arXiv Abstracts and Milvus</h2>
+<p>In this post, I&rsquo;ll walk you through how I created a paper discovery tool using vector embeddings of scientific papers from <a href="https://arxiv.org">arXiv</a> and <a href="https://milvus.io">milvus</a>, an open-source vector database.</p>
+<p>The site is live at <a href="https://papermatch.mitanshu.tech"><strong>papermatch.mitanshu.tech</strong></a>, where you can search for papers in the arXiv database using arXiv ID or any abstract (from anywhere) you provide.</p>
+<h2 id="step-1-embedding-arxiv-abstracts">Step 1: Embedding arXiv Abstracts</h2>
+<p>To represent the papers in a form that can be compared effectively, I used vector embeddings.</p>
+<p>Embedding models (aka Neural Networks) take in bits of data and give out vectors in an $N$-dimensional space where $N$ depends on the model architecture.</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+<figure class="">
+
+    <div>
+        <img loading="lazy" alt="how embeddings work" src=" how_embeddings_work.jpg">
+    </div>
+
+    
+    <div class="caption-container">
+        <figcaption> Source: <a href="https://qdrant.tech/articles/what-are-embeddings/">qdrant</a> </figcaption>
+    </div>
+    
+</figure></p>
+<p>For this I used the open source model <a href="https://huggingface.co/mixedbread-ai/mxbai-embed-large-v1">mixedbread-ai/mxbai-embed-large-v1</a> from <a href="https://www.mixedbread.ai/docs/embeddings/mxbai-embed-large-v1">Mixedbread</a>.</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+<figure class="">
+
+    <div>
+        <img loading="lazy" alt="2d semantics" src=" 2d_semantics.webp">
+    </div>
+
+    
+    <div class="caption-container">
+        <figcaption> Source: <a href="https://arxiv.org/abs/1910.03375">arXiv</a> </figcaption>
+    </div>
+    
+</figure></p>
+<p>These fixed-length numerical representations, of the paper abstracts in our case, capture semantic similarity.</p>
+<p>I utilized a rather straightforward embedding process:</p>
+<ol>
+<li>
+<p><strong>Source data</strong>: Download arXiv metadata from <a href="https://www.kaggle.com/datasets/Cornell-University/arxiv">kaggle</a>.</p>
+</li>
+<li>
+<p><strong>Preprocessing</strong>:</p>
+<ol>
+<li>
+<p>Convert the downloaded <code>json</code> to <code>parquet</code> since python does not play nice to <code>json</code> and is a memory hog.</p>
+</li>
+<li>
+<p>Trim the dataframe to keep only arXiv ID and abstract.</p>
+</li>
+<li>
+<p>Split the dataframe by year for ease of process and continual saving of processed abstracts.</p>
+</li>
+</ol>
+</li>
+<li>
+<p><strong>Embed</strong>: Pass the abstract to the embedding model and store the results in a parquet form with columns <code>['id', 'vector']</code> which is a milvus compatibe format. It took $\sim 20$ hours to process $\sim 2.5$ million (1991-2024) records on a RTX 4050 Laptop GPU.</p>
+</li>
+</ol>
+<p>You can find codes for these at <a href="https://github.com/mitanshu7/embed_arxiv_simpler">mitanshu7/embed_arxiv_simpler</a>. For a slightly complicated process but utilising multiprocessing to speed up your workflow, checkout <a href="https://github.com/mitanshu7/embed_arxiv">mitanshu7/embed_arxiv</a>.</p>
+<h2 id="step-2-storing-embeddings-in-milvus">Step 2: Storing Embeddings in milvus</h2>
+<p>Once I had the embeddings, I needed a way to store and efficiently search through them. This is where milvus comes in handy. It allows for fast and scalable vector similarity searches, making it perfect for this task.</p>
+<p>
+
+
+
+
+
+
+
+
+
+
+<figure class="">
+
+    <div>
+        <img loading="lazy" alt="Vector database comparision" src=" vector-database-comparision.webp">
+    </div>
+
+    
+    <div class="caption-container">
+        <figcaption> Something that helped me choose milvus. Source: <a href="https://www.reddit.com/r/LangChain/comments/170jigz/my_strategy_for_picking_a_vector_database_a/">Reddit</a> </figcaption>
+    </div>
+    
+</figure></p>
+<p>Here&rsquo;s how the process works to handle the interaction between my embedding data and Milvus:</p>
+<ol>
+<li>
+<p><strong>Setup</strong>: I installed and ran Milvus using <a href="https://podman.io/">podman</a> on my Oracle Cloud Instance from the script <a href="https://milvus.io/docs/install_standalone-docker.md">here</a>. I had to modify <a href="https://blog.ryanmartin.me/selinux-containers#heading-quick-fix-2">some parameters</a> to make it compatible with <a href="https://www.redhat.com/sysadmin/user-namespaces-selinux-rootless-containers">SELinux</a>.</p>
+</li>
+<li>
+<p><strong>Data Import</strong>: I <a href="https://milvus.io/docs/import-data.md">imported</a> the abstract embeddings into Milvus. This created a vector collection, which Milvus can efficiently index and search through. I used a <code>FLAT</code> index which has 100% recall rate and is appropriate for million scale databases. For more on this, <a href="https://milvus.io/docs/index.md?tab=floating">see</a>.</p>
+</li>
+<li>
+<p><strong>Query for similar papers</strong>: When a user inputs an arXiv ID, it is first searched in the local vector database, if not found then an API request is sent to arXiv for the details or when inserting abstract (or description), it is first embedded using the same model. Then, Milvus is queried to return the most similar papers based on the <a href="https://en.wikipedia.org/wiki/Cosine_similarity">cosine similarity</a> of their vectors. For more on this, <a href="https://milvus.io/docs/metric.md?tab=floating">see</a>.</p>
+</li>
+</ol>
+<h2 id="step-3-serving-the-app">Step 3: Serving the App</h2>
+<p>To serve the app, I chose <a href="https://www.gradio.app/">Gradio</a>, a simple yet powerful framework for building web UIs for machine learning apps. I integrated Gradio with my backend to allow for a user-friendly interaction with the service.</p>
+<p>You can find codes for these at <a href="https://github.com/mitanshu7/search_arxiv">mitanshu7/search_arxiv</a>.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>By combining transformer-based embeddings with Milvus, I was able to build an efficient and scalable paper recommendation engine. The flexibility of both the embedding model and Milvus allows the system to handle large-scale data, making it a powerful tool for researchers and academics to discover relevant research papers.</p>
+<p>Did i mention that you can try it out at <a href="https://papermatch.mitanshu.tech">papermatch.mitanshu.tech</a>? :)</p>
+
+    
+  </div>
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+  <div class="back-to-top">
+    <a href="#top">
+      back to top
+    </a>
+  </div>
+  
+
+</div>
+
+
+      </main>
+    </div>
+
+    <footer>
+      <p>Powered by
+    <a href="https://gohugo.io/">Hugo</a>
+    and
+    <a href="https://github.com/tomfran/typo">tomfran/typo</a>
+</p>
+
+
+<link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css">
+<script defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script>
+
+<script defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body);"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false }
+      ]
+    });
+  });
+</script>
+
+    </footer>
+
+  </body>
+
+  <script>
+
+  function isAuto() {
+    return document.body.classList.contains("auto");
+  }
+
+  function setTheme() {
+    if (!isAuto()) {
+      return
+    }
+
+    document.body.classList.remove("auto");
+    let cls = "light";
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      cls = "dark";
+    }
+
+    document.body.classList.add(cls);
+  }
+
+  function invertBody() {
+    document.body.classList.toggle("dark");
+    document.body.classList.toggle("light");
+  }
+
+  if (isAuto()) {
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(invertBody);
+  }
+
+  setTheme();
+
+</script>
+
+</html>
