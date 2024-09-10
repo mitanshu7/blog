@@ -1,0 +1,74 @@
+baseURL = 'https://example.org/'
+languageCode = 'en-us'
+title = 'My website'
+theme = 'typo'
+
+[taxonomies]
+tag = 'tags'
+
+# Google analytics code
+googleAnalytics = "G-xxxxxxxxx"
+
+[params]
+# Meta description
+description = "A Tech Blog"
+
+# Appearance settings
+theme = 'auto'
+colorPalette = 'catpuccin'
+hideHeader = false
+
+# Intro on main page, content is markdown
+homeIntroTitle = 'Hi!'
+homeIntroContent = """
+I am a Physicist by training and a Software Developer by heart. Methodic coffee brewer with interests in NLP and applications of AI in Healthcare.
+"""
+
+# Collection to display on home
+homeCollectionTitle = 'Posts'
+homeCollection = 'posts'
+
+# Lists parameters
+paginationSize = 10
+listSummaries = true
+listDateFormat = '2000 Jan 1'
+
+# Breadcrumbs
+breadcrumbs = true
+
+# Social icons
+[[params.social]]
+name = "linkedin"
+url = "https://www.linkedin.com/in/mitanshusukhwani/"
+
+[[params.social]]
+name = "github"
+url = "https://github.com/mitanshu7"
+
+# Main menu pages
+[[params.menu]]
+name = "home"
+url = "/"
+
+[[params.menu]]
+name = "posts"
+url = "/posts"
+
+[[params.menu]]
+name = "about"
+url = "/about"
+
+# Syntax highligth on code blocks
+[markup]
+[markup.highlight]
+style = 'algol'
+
+# Giscus comments
+[params.giscus]
+enable = false
+repo = "user/repo"
+repoid = "repoId"
+category = "General"
+categoryid = "categoryId"
+mapping = "pathname"
+theme = "preferred_color_scheme"
